@@ -1,0 +1,27 @@
+{
+  "name": "@skpm/path",
+  "version": "0.1.0",
+  "description": "A drop-in replacement for the path nodejs module",
+  "main": "index.js",
+  "scripts": {
+    "test": "skpm-test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skpm/path.git"
+  },
+  "keywords": [
+    "sketch",
+    "module",
+    "path"
+  ],
+  "author": "Mathieu Dutour <mathieu@dutour.me> (http://mathieu.dutour.me/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skpm/path/issues"
+  },
+  "homepage": "https://github.com/skpm/path#readme",
+  "devDependencies": {
+    "@skpm/test-runner": "^0.1.30"
+  }
+}

@@ -6,7 +6,7 @@ node_js:
   - "node"
 
 before_install:
-  - brew update
+  - brew update >/dev/null # brew is really verbose and we don't really care about it so shut it up
   - brew cask install sketch # install Sketch
   - mkdir -p "~/Library/Application Support/com.bohemiancoding.sketch3/Plugins" # create plugins folder
   - echo $SKETCH_LICENSE > "~/Library/Application Support/com.bohemiancoding.sketch3/.deployment" # add the Sketch license

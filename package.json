@@ -1,6 +1,6 @@
 {
   "name": "@skpm/path",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A drop-in replacement for the path nodejs module",
   "main": "index.js",
   "scripts": {
@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/skpm/path#readme",
   "devDependencies": {
-    "@skpm/test-runner": "^0.1.30"
+    "@skpm/test-runner": "^0.3.3"
   }
 }

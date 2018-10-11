@@ -19,6 +19,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+var sketchSpecifics = require('./sketch-specifics')
+
 // we only expose the posix implementation since Sketch only runs on macOS
 
 var CHAR_FORWARD_SLASH = 47
@@ -101,21 +103,6 @@ function _format(sep, pathObject) {
   return dir + sep + base
 }
 
-function normalizePath(path) {
-  if (typeof path === 'string') {
-    return path
-  }
-  if (path && path.class && typeof path.class === 'function') {
-    const className = String(path.class())
-    if (className === 'NSString') {
-      return String(path)
-    } else if (className === 'NSURL') {
-      return String(path.path())
-    }
-  }
-  throw new Error('path should be a string')
-}
-
 var posix = {
   // path.resolve([from ...], to)
   resolve: function resolve() {
@@ -125,14 +112,16 @@ var posix = {
 
     for (var i = arguments.length - 1; i >= -1 && !resolvedAbsolute; i -= 1) {
       var path
-      if (i >= 0) path = arguments[i]
-      else {
-        if (cwd === undefined)
-          cwd = posix.dirname(String(__command.script().URL().path()) || MSPluginManager.defaultPluginURL())
+      if (i >= 0) {
+        path = arguments[i]
+      } else {
+        if (cwd === undefined) {
+          cwd = posix.dirname(sketchSpecifics.cwd())
+        }
         path = cwd
       }
 
-      path = normalizePath(path)
+      path = sketchSpecifics.getString(path, 'path')
 
       // Skip empty entries
       if (path.length === 0) {
@@ -160,7 +149,7 @@ var posix = {
   },
 
   normalize: function normalize(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
 
     if (path.length === 0) return '.'
 
@@ -179,7 +168,7 @@ var posix = {
   },
 
   isAbsolute: function isAbsolute(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
     return path.length > 0 && path.charCodeAt(0) === CHAR_FORWARD_SLASH
   },
 
@@ -188,7 +177,7 @@ var posix = {
     var joined
     for (var i = 0; i < arguments.length; i += 1) {
       var arg = arguments[i]
-      arg = normalizePath(arg)
+      arg = sketchSpecifics.getString(arg, 'path')
       if (arg.length > 0) {
         if (joined === undefined) joined = arg
         else joined += '/' + arg
@@ -199,8 +188,8 @@ var posix = {
   },
 
   relative: function relative(from, to) {
-    from = normalizePath(from)
-    to = normalizePath(to)
+    from = sketchSpecifics.getString(from, 'from path')
+    to = sketchSpecifics.getString(to, 'to path')
 
     if (from === to) return ''
 
@@ -286,7 +275,7 @@ var posix = {
   },
 
   dirname: function dirname(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
     if (path.length === 0) return '.'
     var code = path.charCodeAt(0)
     var hasRoot = code === CHAR_FORWARD_SLASH
@@ -311,9 +300,9 @@ var posix = {
   },
 
   basename: function basename(path, ext) {
-    if (ext !== undefined && typeof ext !== 'string')
-      throw new Error('ext should be a string')
-    path = normalizePath(path)
+    if (ext !== undefined)
+      ext = sketchSpecifics.getString(ext, 'ext')
+    path = sketchSpecifics.getString(path, 'path')
 
     var start = 0
     var end = -1
@@ -384,7 +373,7 @@ var posix = {
   },
 
   extname: function extname(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
     var startDot = -1
     var startPart = 0
     var end = -1
@@ -441,7 +430,7 @@ var posix = {
   },
 
   parse: function parse(path) {
-    path = normalizePath(path)
+    path = sketchSpecifics.getString(path, 'path')
 
     var ret = { root: '', dir: '', base: '', ext: '', name: '' }
     if (path.length === 0) return ret

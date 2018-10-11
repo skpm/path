@@ -1,9 +1,9 @@
 const path = require('../')
 
 test('resolve', () => {
-  expect(path.resolve()).toBe(path.dirname(String(__command.script().URL().path())))
-  expect(path.resolve('./test')).toBe(path.dirname(String(__command.script().URL().path())) + '/test')
-  expect(path.resolve('../test')).toBe(path.dirname(path.dirname(String(__command.script().URL().path()))) + '/test')
+  expect(path.resolve()).toBe(path.dirname(String(__command.script().URL().path().copy())))
+  expect(path.resolve('./test')).toBe(path.dirname(String(__command.script().URL().path().copy())) + '/test')
+  expect(path.resolve('../test')).toBe(path.dirname(path.dirname(String(__command.script().URL().path().copy()))) + '/test')
   expect(path.resolve('/test')).toBe('/test')
 })
 

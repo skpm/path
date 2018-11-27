@@ -516,8 +516,8 @@ var posix = {
   delimiter: ':',
   win32: null,
   posix: null,
-}
 
-posix.posix = posix
+  resourcePath: sketchSpecifics.resourcePath,
+}
 
 module.exports = posix

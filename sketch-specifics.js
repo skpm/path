@@ -17,3 +17,14 @@ module.exports.cwd = function cwd() {
   }
   return String(MSPluginManager.defaultPluginURL().path().copy())
 }
+
+module.exports.resourcePath = function resourcePath(resourceName) {
+  if (typeof __command === 'undefined' || __command.pluginBundle()) {
+    return undefined
+  }
+  var resource = __command.pluginBundle().urlForResourceNamed(resourceName)
+  if (!resource) {
+    return undefined
+  }
+  return String(resource.path())
+}

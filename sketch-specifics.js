@@ -19,7 +19,7 @@ module.exports.cwd = function cwd() {
 }
 
 module.exports.resourcePath = function resourcePath(resourceName) {
-  if (typeof __command === 'undefined' || __command.pluginBundle()) {
+  if (typeof __command === 'undefined' || !__command.pluginBundle()) {
     return undefined
   }
   var resource = __command.pluginBundle().urlForResourceNamed(resourceName)

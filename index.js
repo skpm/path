@@ -521,3 +521,4 @@ var posix = {
 }
 
 module.exports = posix
+module.exports.posix = posix

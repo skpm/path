@@ -3,6 +3,7 @@
   "version": "0.1.4",
   "description": "A drop-in replacement for the path nodejs module",
   "main": "index.js",
+  "types": "./type.d.ts",
   "scripts": {
     "test": "skpm-test"
   },
@@ -22,6 +23,7 @@
   },
   "homepage": "https://github.com/skpm/path#readme",
   "devDependencies": {
-    "@skpm/test-runner": "^0.3.3"
+    "@skpm/test-runner": "^0.3.3",
+    "@types/node": "^14.11.5"
   }
 }
